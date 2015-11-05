@@ -3,6 +3,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
+#include <FS.h>
 
 #define PIN_LED     5
 #define PIN_ENABLE  4
@@ -28,21 +29,25 @@ void initWiFi() {
   Serial.println();
   Serial.println("Startup");
 
-
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid);
   WiFi.begin(ssid); // not sure if need but works
   Serial.print("Access point started with name ");
   Serial.println(ssid);
 
-  server.on("/", handleConfig);
-  server.on("/index.html", handleConfig);
+  server.on("/", handleRoot);
+  server.on("/index.html", handleRoot);
   server.begin();
+
+  SPIFFS.begin();
+
 }
 
-void handleConfig() {
+void handleRoot() {
   Serial.println("Sending handleConfig");
-  String toSend = "Hello!";
-  server.send(200, "text/html", toSend);
+
+  File dataFile = SPIFFS.open("/index.tpl", "r");
+  server.streamFile(dataFile, "text/html");
+  dataFile.close();
 }
 
