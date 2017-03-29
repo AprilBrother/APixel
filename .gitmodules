@@ -1,3 +1,6 @@
 [submodule "src/arduino"]
 	path = src/arduino
 	url = https://github.com/volca/abutton-arduino.git
+[submodule "src/abutton/arduino"]
+	path = src/abutton/arduino
+	url = https://github.com/volca/abutton-arduino.git
