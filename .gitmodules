@@ -1,0 +1,3 @@
+[submodule "src/arduino"]
+	path = src/arduino
+	url = https://github.com/volca/abutton-arduino.git
